@@ -1,5 +1,9 @@
 import 'dotenv/config'
 import fetch from "node-fetch";
+import { table } from 'table';
+import chalk from 'chalk';
+import fs from 'fs';
+import { stringify } from 'csv-stringify';
 
 import { Octokit } from "@octokit/rest";
 const octokit = new Octokit({ auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN });
@@ -56,13 +60,61 @@ async function getPackageFile(repoName, packageName, packageVersion) {
     }
 }
 
+const generateCLITable = (repos) => {
+    let data = [];
+    for(const repo of repos) {
+        let d = [];
+        d.push(repo.name, repo.repo, repo.version, repo.version_satisfied ? chalk.greenBright(repo.version_satisfied) : chalk.redBright(repo.version_satisfied));
+        data.push(d);
+    }
+  
+    const config = {
+        columnDefault: {
+        width: 10,
+        },
+        header: {
+            alignment: 'center',
+            content: 'OUTPUT',
+        },
+    }
+  
+    console.log(table(data, config));
+}
+
+const generateCSV = (repos) => {
+    const filename = "output.csv";
+    const writableStream = fs.createWriteStream(filename);
+
+    const columns = [
+        "name",
+        "repo",
+        "version",
+        "version_satisfied"
+    ];
+
+    const stringifier = stringify({ header: true, columns: columns });
+    for(const repo of repos) {
+        let row = [];
+        row.push(repo.name, repo.repo, repo.version, repo.version_satisfied ? "true": "false");
+        stringifier.write(row);
+    }
+
+    stringifier.pipe(writableStream);
+    console.log(`Finished writing data into ${filename}`);
+}
+
 export const githubRepoData = async(repos, packageName, packageVersion) => {
     // just to check if the user is able to login
+    try {
     const { data: { login } } = await octokit.rest.users.getAuthenticated();
     console.log("Hello %s", login);
+    } catch(error) {
+        console.log(chalk.bgRed("Error in Logging you in!! Check your Personal Access Token"))
+        return ;
+    }
 
-    console.log(repos);
-    repos.forEach(repo => {
+    // checking each repo by iteration
+    for(const repo of repos) {
         const repoURL = repo.repo;
         let repoName = repoURL.split('/');
         repoName = repoName[repoName.length - 1];
@@ -70,13 +122,12 @@ export const githubRepoData = async(repos, packageName, packageVersion) => {
             repoName = repoURL.split('/');
             repoName = repoName[repoName.length - 2];
         }
-        console.log(repoURL + " => " + repoName);
 
-        let status = getPackageFile(repoName, packageName, packageVersion);
-        status.then((result) => {
-            repo.version = result.actualVersion
-            repo.version_satisfied = result.status;
-            console.log(repo)
-        })
-    });
+        let result = await getPackageFile(repoName, packageName, packageVersion);
+        repo.version = result.actualVersion;
+        repo.version_satisfied = result.status;
+    }
+
+    generateCLITable(await repos);
+    generateCSV(await repos);
 }
