@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "This is CLI to check for dependencies on github repositories",
   "main": "bin/index.js",
-  "bin": {  
-    "vbot": "./bin/index.js"  
+  "bin": {
+    "vbot": "./bin/index.js"
   },
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,5 +24,9 @@
   "bugs": {
     "url": "https://github.com/dyte-submissions/dyte-vit-2022-dakshsethi/issues"
   },
-  "homepage": "https://github.com/dyte-submissions/dyte-vit-2022-dakshsethi#readme"
+  "homepage": "https://github.com/dyte-submissions/dyte-vit-2022-dakshsethi#readme",
+  "dependencies": {
+    "commander": "^9.3.0",
+    "yargs": "^17.5.1"
+  }
 }

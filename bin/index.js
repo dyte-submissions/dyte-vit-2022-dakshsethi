@@ -1,2 +1,29 @@
 #! /usr/bin/env node
-console.log("Hello World!");
+import { program } from 'commander';
+
+program
+  .version('1.0.0')
+  .description("CLI to check GITHUB repo dependencies");
+
+program
+    .command("i <filename> <package_name>")
+    .alias('input')
+    .description('takes input')
+    .action((filename, package_name) => {
+        console.log(`File name is ${filename} and the package is ${package_name}`)
+    })
+
+program
+    .command("update <i> <filename> <package_name>")
+    .alias('u')
+    .description('takes input')
+    .action((input, filename, package_name) => {
+        console.log(`File updated name is ${filename} and the package is ${package_name}`)
+    })
+
+
+program.parse(process.args);
+
+// const options = program.opts();
+// const limit = options.first ? 1 : undefined;
+// console.log(program.args[0].split('/')[0]);
