@@ -34,6 +34,6 @@ export const getInputFile = async(fileName, packageV) => {
     .on('end', rowCount => {
         console.log(`Parsed ${rowCount} rows`);
         // console.log(rows);
-        githubRepoData(rows);
+        githubRepoData(rows, packageName, packageVersion);
     });
 }
