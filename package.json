@@ -26,7 +26,11 @@
   },
   "homepage": "https://github.com/dyte-submissions/dyte-vit-2022-dakshsethi#readme",
   "dependencies": {
+    "chalk": "^5.0.1",
     "commander": "^9.3.0",
+    "csv-parse": "^5.1.0",
+    "fs": "0.0.1-security",
+    "require": "^2.4.20",
     "yargs": "^17.5.1"
   }
 }
