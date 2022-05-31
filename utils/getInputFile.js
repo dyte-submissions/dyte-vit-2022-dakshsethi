@@ -1,6 +1,7 @@
 import fs from 'fs';
 import chalk from 'chalk';
 import { parse } from 'fast-csv';
+import { githubRepoData } from './getGitHubRepoData.js';
 
 export const getInputFile = async(fileName, packageV) => {
     // the below condition checks if the file is CSV or not
@@ -32,6 +33,7 @@ export const getInputFile = async(fileName, packageV) => {
     })
     .on('end', rowCount => {
         console.log(`Parsed ${rowCount} rows`);
-        console.log(rows);
+        // console.log(rows);
+        githubRepoData(rows);
     });
 }
