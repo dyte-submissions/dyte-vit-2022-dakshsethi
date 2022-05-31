@@ -18,8 +18,8 @@ program
 
 // this command is for the updating part
 program
-    .command("update <i> <filename> <package_name>")
-    .alias('u')
+    .command("u <i> <filename> <package_name>")
+    .alias('update')
     .description('takes input')
     .action((input, filename, package_name) => {
         console.log(`File updated name is ${filename} and the package is ${package_name}`)
