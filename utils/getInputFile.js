@@ -1,8 +1,8 @@
 import fs from 'fs';
 import chalk from 'chalk';
-import { parse } from 'csv-parse';
+import { parse } from 'fast-csv';
 
-export const getInputFile = (fileName, packageV) => {
+export const getInputFile = async(fileName, packageV) => {
     // the below condition checks if the file is CSV or not
     if(fileName.slice(-4) !== '.csv') {
         console.log(chalk.bgRed("Please enter a CSV file only!"));
@@ -22,10 +22,16 @@ export const getInputFile = (fileName, packageV) => {
     console.log("Package Name: " + chalk.greenBright(packageName));
     console.log("Package Version: " + chalk.greenBright(packageVersion));
 
-    // the below code is parsing the given CSV file and 
+    // the below code is parsing the given CSV file and getting data in an array
+    let rows = []
     fs.createReadStream(`./${fileName}`)
-    .pipe(parse({ delimiter: ",", from_line: 2 }))
-    .on("data", function (data) {
-        console.log(data);
+    .pipe(parse({ headers: true }))
+    .on('error', error => console.error(error))
+    .on("data", row => {
+        rows.push(row);
     })
+    .on('end', rowCount => {
+        console.log(`Parsed ${rowCount} rows`);
+        console.log(rows);
+    });
 }

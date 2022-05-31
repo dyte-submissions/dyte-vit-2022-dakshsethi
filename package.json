@@ -29,7 +29,9 @@
     "chalk": "^5.0.1",
     "commander": "^9.3.0",
     "csv-parse": "^5.1.0",
+    "fast-csv": "^4.3.6",
     "fs": "0.0.1-security",
+    "path": "^0.12.7",
     "require": "^2.4.20",
     "yargs": "^17.5.1"
   }
