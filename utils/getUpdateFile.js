@@ -3,7 +3,7 @@ import { parse } from 'fast-csv';
 import { fileInfo } from './fileInfo.js';
 import { githubRepoData } from './getGitHubRepoData.js';
 
-export const getInputFile = async(fileName, packageV) => {
+export const getUpdateFile = async(fileName, packageV) => {
     const { packageName, packageVersion } = await fileInfo(fileName, packageV);
 
     // the below code is parsing the given CSV file and getting data in an array
@@ -16,6 +16,6 @@ export const getInputFile = async(fileName, packageV) => {
     })
     .on('end', rowCount => {
         console.log(`Parsed ${rowCount} rows`);
-        githubRepoData(rows, packageName, packageVersion, "input");
+        githubRepoData(rows, packageName, packageVersion, "update");
     });
 }

@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 import { program } from 'commander';
 import { getInputFile } from './../utils/getInputFile.js'
+import { getUpdateFile } from './../utils/getUpdateFile.js'
 
 program
   .version('1.0.0')
@@ -22,7 +23,8 @@ program
     .alias('update')
     .description('takes input')
     .action((input, filename, package_name) => {
-        console.log(`File updated name is ${filename} and the package is ${package_name}`)
+        // console.log(`File updated name is ${filename} and the package is ${package_name}`)
+        getUpdateFile(filename, package_name);
     })
 
 
