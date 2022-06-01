@@ -63,7 +63,7 @@ async function getPackageFile(repoName, packageName, packageVersion) {
 const generateCLITable = (repos, command) => {
     let data = [];
     for(const repo of repos) {
-        console.log(repo)
+        // console.log(repo)
         let d = [];
         d.push(repo.name, repo.repo, repo.version, repo.version_satisfied ? chalk.greenBright(repo.version_satisfied) : chalk.redBright(repo.version_satisfied));
         if(command === "update") d.push(repo.update_pr);
@@ -91,8 +91,7 @@ const generateCSV = (repos, command) => {
         "name",
         "repo",
         "version",
-        "version_satisfied",
-        "update_pr"
+        "version_satisfied"
     ];
 
     if(command === "update") columns.push("update_pr");
@@ -156,15 +155,15 @@ const sendPR = async(repo) => {
     const response1 = await fetch(url1, options1);
     const jsonResponse1 = await response1.json();
     const sha_latest_commit = await jsonResponse1.object.sha;
-    console.log("URL1 = GET " + url1);
-    console.log(chalk.bgGreen("sha latest commit = " + sha_latest_commit));
+    // console.log("URL1 = GET " + url1);
+    // console.log(chalk.bgGreen("sha latest commit = " + sha_latest_commit));
 
     const url2 = `https://api.github.com/repos/${process.env.GITHUB_USERNAME}/${repo.name}/git/commits/${sha_latest_commit}`;
     const response2 = await fetch(url2, options1);
     const jsonResponse2 = await response2.json();
     const sha_base_tree = await jsonResponse2.tree.sha;
-    console.log("URL2 = GET " + url2);
-    console.log(chalk.bgGreen("sha base tree = " + sha_base_tree));
+    // console.log("URL2 = GET " + url2);
+    // console.log(chalk.bgGreen("sha base tree = " + sha_base_tree));
 
     const url3 = `https://api.github.com/repos/${process.env.GITHUB_USERNAME}/${repo.name}/git/trees`;
     const body3 =
@@ -172,10 +171,10 @@ const sendPR = async(repo) => {
             "base_tree": sha_base_tree,
             "tree": [
               {
-                "path": "NewFile1.txt",
+                "path": "NewFile3.txt",
                 "mode": "100644",
                 "type": "blob",
-                "content": "New Creation!!"
+                "content": "Hi i was just created using API"
               },
               {
                 "path": "NewFile2.txt",
@@ -195,8 +194,8 @@ const sendPR = async(repo) => {
     const response3 = await fetch(url3, options3);
     const jsonResponse3 = await response3.json();
     const sha_new_tree = await jsonResponse3.sha;
-    console.log("URL3 = POST " + url3);
-    console.log(chalk.bgGreen("sha new tree = " + sha_new_tree));
+    // console.log("URL3 = POST " + url3);
+    // console.log(chalk.bgGreen("sha new tree = " + sha_new_tree));
 
     const url4 = `https://api.github.com/repos/${process.env.GITHUB_USERNAME}/${repo.name}/git/commits`;
     const body4 =
@@ -215,8 +214,8 @@ const sendPR = async(repo) => {
     const response4 = await fetch(url4, options4);
     const jsonResponse4= await response4.json();
     const sha_new_commit = jsonResponse4.sha;
-    console.log("URL4 = POST " + url4);
-    console.log(chalk.bgGreen("sha new commit = " + sha_new_commit));
+    // console.log("URL4 = POST " + url4);
+    // console.log(chalk.bgGreen("sha new commit = " + sha_new_commit));
 
     const url5 = `https://api.github.com/repos/${process.env.GITHUB_USERNAME}/${repo.name}/git/refs/heads/fix`;
     const body5 =
@@ -232,9 +231,8 @@ const sendPR = async(repo) => {
     }
     const response5 = await fetch(url5, options5);
     const jsonResponse5= response5.status;
-    // const sha_new_commit = jsonResponse5.sha;
-    console.log("URL5 = POST " + url5);
-    console.log(chalk.bgGreen("Reponse status = " + jsonResponse5));
+    // console.log("URL5 = POST " + url5);
+    // console.log(chalk.bgGreen("Reponse status = " + jsonResponse5));
 
     const url6 = `https://api.github.com/repos/${process.env.GITHUB_USERNAME}/${repo.name}/pulls`;
     const body6 = 
@@ -254,7 +252,7 @@ const sendPR = async(repo) => {
     const response6 = await fetch(url6, options6);
     const jsonResponse6= await response6.json();
     const prURL = jsonResponse6.html_url;
-    console.log(chalk.bgBlue("PR URl = " + prURL));
+    // console.log(chalk.bgBlue("PR URl = " + prURL));
     
     return prURL;
 }
@@ -286,7 +284,6 @@ export const githubRepoData = async(repos, packageName, packageVersion, command)
 
         if(command === "update") {
             repo.update_pr = await sendPR(repo);
-            console.log(await repo.update_pr)
         }
     }
 
