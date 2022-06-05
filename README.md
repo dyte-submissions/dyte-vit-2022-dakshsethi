@@ -34,19 +34,19 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">VBot - DYTE SDK Tooling Challenge</h3>
 
   <p align="center">
-    project_description
+    VBot is a command line interface (CLI) tool that can help you manage versions of the packages that are used within your repositories. VBot provides you with 2 simple in-built commands to detect any version anamoly and can send PR to correct it.
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/dyte-submissions/dyte-vit-2022-dakshsethi"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://github.com/dyte-submissions/dyte-vit-2022-dakshsethi">View Demo</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/dyte-submissions/dyte-vit-2022-dakshsethi/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/dyte-submissions/dyte-vit-2022-dakshsethi/issues">Request Feature</a>
   </p>
 </div>
 
@@ -74,7 +74,6 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -83,9 +82,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Screenshot][product-screenshot]]()
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+The project can simply be started by calling the CLI name `vbot` in your terminal. In my case i am using `Windows Powershell` here. The above screenshot shows the `options` and the `commands` of this CLI tool.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -93,14 +92,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* [Node.js](https://nodejs.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -108,13 +100,8 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
+* Node.js - install the latest version of it.
 * npm
   ```sh
   npm install npm@latest -g
@@ -122,19 +109,28 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/dyte-submissions/dyte-vit-2022-dakshsethi
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+3. In the root directory of your project, create an environment file by the name `.env`
+4. Go to profile page of Github - https://github.com/settings/profile
+5. Click on Developer Options in the bottom of the left side-bar.
+  [![Developer Options][developer-settings]]()
+6. Select `Personal access tokens`
+7. Click on `generate new token`
+8. Enter your GitHub Password
+9. Do this as the below image [![Options][options]]()
+10. Click on `Generate token`
+11. Copy the Generated Personal Access Token
+    [![PAT][pat-code]]()
+  <br>
+12. Open the `.env` file and it should look like this
+   [![ENV File][env-file]]()
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -143,9 +139,32 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+This is how you can use this CLI tool directly through the terminal.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+Open the root directory of the project
+```sh
+cd repo
+npm install vbot
+npm install -g .
+```
+
+After successfull install now the CLI tool can be directly in the terminal.
+
+Open the terminal and type
+```bash
+vbot
+```
+[![Product Screenshot][product-screenshot]]()
+
+<b>Note: </b>
+If the above command `vbot` gives error like this:
+[![error][error-msg]]()
+Then you can navigate to the root folder and simply type this command
+```sh
+node bin/index.js
+```
+[![error sort][error-resolved]]()
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -154,12 +173,48 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+#### 1. Input File
+This is the 1st command of the `SDK Tooling Challenge`
+Steps:
+  - Go to project directory
+  - Paste the CSV file in the root of this directory
+  - run the below command in the terminal
+  ```bash
+    vbot i input.csv react@17.0.2 
+  ```
+
+  This produces this output in the terminal
+  [![input command][input-command]]()
+
+  This generates a CSV file `output.csv` like this:
+  [![output csv file][output-csv]]()
+#### 2. Update PR File
+**Note:** This function requires that a `fix` branch exists right now in the repositories. As i tried working on `Creating Branch using GitHub API` but due to some errors and technical glitch, it was not working. Also due to lack of time as the project was very tedious, i am able to commit 2 new files with the help of `GitHub API` and call a PR request but not `package.json` as of right now. If given enough time, this issue will be resolved later on.
+
+This is the 2nd command of the `SDK Tooling Challenge`
+Steps:
+  - Go to project directory
+  - Paste the CSV file in the root of this directory
+  - run the below command in the terminal
+  ```bash
+    vbot u i input.csv react@17.0.4 
+  ```
+
+  This produces following output
+  [![update command][update-command]]()
+  The URLs and sha are just for the reference of understanding as multiple back-to-back API calls are fired just to commit and open up a PR in the `fix` branch.
+
+  This can be checked in the Repo Pull page too:
+  [![Pull Request][PR]]()
+
+  This generates an `output1.csv` file too:
+  [![output csv file][output1-csv]]()
+
+
 
 See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+
+**Note:** Basic error handling is made available in the project.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -186,8 +241,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
+Distributed under the MIT License.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -195,20 +249,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Daksh Sethi - [@sethidaksh02](https://twitter.com/sethidaksh02) - sethidaksh02@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
+Project Link: [https://github.com/dyte-submissions/dyte-vit-2022-dakshsethi](https://github.com/dyte-submissions/dyte-vit-2022-dakshsethi)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -228,4 +271,15 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: images/initial.png
+[developer-settings]: images/developer-settings.png
+[options]: images/options.png
+[pat-code]: images/pat-code.png
+[env-file]: images/env-file.png
+[error-msg]: images/error.png
+[error-resolved]: images/error-resolved.png
+[input-command]: images/input-command.png
+[output-csv]: images/output-csv.png
+[update-command]: images/update-command.png
+[PR]: images/PR.png
+[output1-csv]: images/output1-csv.png
